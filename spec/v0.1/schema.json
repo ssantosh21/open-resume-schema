@@ -1,0 +1,310 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/open-resume-schema/spec/v0.1/schema.json",
+  "title": "Open Resume Schema (ORS) v0.1",
+  "description": "A structured, machine-readable resume schema for software engineers.",
+  "type": "object",
+  "required": ["schema", "basics", "skills", "experience"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "ors/v0.1",
+      "description": "Schema version identifier. Must be ors/v0.1."
+    },
+    "basics": {
+      "type": "object",
+      "required": ["name", "title", "contact"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Full name."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Current or target job title."
+        },
+        "location": {
+          "type": "string",
+          "description": "City, Country."
+        },
+        "years_of_experience": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total years in software engineering."
+        },
+        "available_from": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Notice period in days. 0 = immediate, 30 = one month, 90 = three months."
+        },
+        "summary": {
+          "type": "string",
+          "description": "2-3 sentence professional summary."
+        },
+        "contact": {
+          "type": "object",
+          "required": ["email"],
+          "additionalProperties": false,
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email",
+              "description": "Email address. Required."
+            },
+            "linkedin": {
+              "type": "string",
+              "description": "LinkedIn profile URL."
+            },
+            "github": {
+              "type": "string",
+              "description": "GitHub profile URL."
+            },
+            "website": {
+              "type": "string",
+              "description": "Personal site or portfolio URL."
+            },
+            "phone": {
+              "type": "string",
+              "description": "Phone number."
+            }
+          }
+        }
+      }
+    },
+    "skills": {
+      "type": "object",
+      "required": ["primary"],
+      "additionalProperties": false,
+      "properties": {
+        "primary": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10,
+          "description": "Primary skills. 3-5 recommended.",
+          "items": {
+            "type": "object",
+            "required": ["name", "depth", "years"],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "depth": {
+                "$ref": "#/definitions/depth"
+              },
+              "years": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "tools": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        },
+        "secondary": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "depth"],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "depth": {
+                "$ref": "#/definitions/depth"
+              },
+              "years": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "tools": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "experience": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Work experience in reverse chronological order.",
+      "items": {
+        "type": "object",
+        "required": ["company", "title", "start", "end", "type", "summary", "impact"],
+        "additionalProperties": false,
+        "properties": {
+          "company": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start": {
+            "type": "string",
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+            "description": "Start date in YYYY-MM format."
+          },
+          "end": {
+            "type": "string",
+            "pattern": "^(\\d{4}-(0[1-9]|1[0-2])|present)$",
+            "description": "End date in YYYY-MM format or 'present'."
+          },
+          "location": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/definitions/experienceType"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "impact": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/definitions/impact"
+            }
+          },
+          "technologies": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "projects": {
+      "type": "array",
+      "description": "Side projects, open source, portfolio work.",
+      "items": {
+        "type": "object",
+        "required": ["name", "role", "summary", "impact"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string"
+          },
+          "role": {
+            "$ref": "#/definitions/projectRole"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "impact": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/definitions/impact"
+            }
+          },
+          "technologies": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "learning": {
+      "type": "array",
+      "description": "Skills acquired through self-study, courses, or independent projects.",
+      "items": {
+        "type": "object",
+        "required": ["name", "period", "depth", "topics"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "What you learned."
+          },
+          "period": {
+            "type": "string",
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+            "description": "When you learned it in YYYY-MM format."
+          },
+          "depth": {
+            "$ref": "#/definitions/depth"
+          },
+          "evidence": {
+            "type": "string",
+            "description": "Link to repo, blog post, or certificate."
+          },
+          "topics": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string" },
+            "description": "Searchable keywords."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "depth": {
+      "type": "string",
+      "enum": ["beginner", "intermediate", "advanced", "expert"],
+      "description": "Skill depth level."
+    },
+    "experienceType": {
+      "type": "string",
+      "enum": ["full-time", "contract", "freelance", "founding", "internship"],
+      "description": "Employment type."
+    },
+    "projectRole": {
+      "type": "string",
+      "enum": ["creator", "maintainer", "contributor"],
+      "description": "Relationship to the project."
+    },
+    "impact": {
+      "type": "object",
+      "required": ["metric", "context"],
+      "additionalProperties": false,
+      "properties": {
+        "metric": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The quantified achievement."
+        },
+        "context": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What was the situation or project."
+        },
+        "services": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Technologies used for this impact."
+        },
+        "before": {
+          "type": "string",
+          "description": "State before your work."
+        },
+        "after": {
+          "type": "string",
+          "description": "State after your work."
+        },
+        "team_size": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of people involved."
+        }
+      }
+    }
+  }
+}

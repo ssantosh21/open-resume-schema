@@ -33,6 +33,7 @@ skills:
     - name: string
       depth: enum
       years: integer              # Optional for secondary skills
+      tools: [string]             # Optional
 
 # ─── EXPERIENCE ───────────────────────────────────────────
 # Required. Reverse chronological. Each entry is a role, not a project.

@@ -1,0 +1,27 @@
+# Open Resume Schema — Minimal Example
+# Only required fields. The smallest valid ORS resume.
+
+schema: ors/v0.1
+
+basics:
+  name: Alex Chen
+  title: Backend Engineer
+  contact:
+    email: alex.chen@example.com
+
+skills:
+  primary:
+    - name: Go
+      depth: advanced
+      years: 4
+
+experience:
+  - company: Acme Corp
+    title: Backend Engineer
+    start: 2022-01
+    end: present
+    type: full-time
+    summary: "Backend services for e-commerce platform."
+    impact:
+      - metric: "Reduced API latency by 40%"
+        context: "Rewrote hot path from Python to Go"
