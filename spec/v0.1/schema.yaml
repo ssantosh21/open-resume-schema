@@ -1,0 +1,118 @@
+# Open Resume Schema (ORS) v0.1
+# Spec for software engineer resumes
+# Author: Santosh Kumar Dubey
+
+schema: ors/v0.1
+
+# ─── BASICS ───────────────────────────────────────────────
+# Required. Core identity and contact.
+basics:
+  name: string                    # Full name
+  title: string                   # Current/target title (e.g., "Staff Engineer")
+  location: string                # City, Country
+  years_of_experience: integer    # Total years in software engineering
+  available_from: integer           # Optional — notice period in days (0 = immediate, 30 = one month, 90 = three months)
+  summary: string                 # 2-3 sentence professional summary
+  contact:
+    email: string                 # Required
+    linkedin: string              # Optional — LinkedIn profile URL
+    github: string                # Optional — GitHub profile URL
+    website: string               # Optional — personal site or portfolio
+    phone: string                 # Optional — prefer not to include
+
+# ─── SKILLS ───────────────────────────────────────────────
+# Required. Split into primary (hire me for this) and secondary (I also know this).
+skills:
+  primary:                        # 3-5 max. Your headline skills.
+    - name: string                # Skill name (e.g., "AWS Serverless")
+      depth: enum                 # beginner | intermediate | advanced | expert
+      years: integer              # Years of active use
+      tools: [string]             # Optional — specific tools/services within this skill
+
+  secondary:                      # Optional. Supporting skills.
+    - name: string
+      depth: enum
+      years: integer              # Optional for secondary skills
+
+# ─── EXPERIENCE ───────────────────────────────────────────
+# Required. Reverse chronological. Each entry is a role, not a project.
+experience:
+  - company: string               # Company name
+    title: string                 # Your title at this company
+    start: date                   # YYYY-MM format
+    end: date | "present"         # YYYY-MM or "present"
+    location: string              # Optional — city or "Remote"
+    type: enum                    # full-time | contract | freelance | founding | internship
+    summary: string               # 1-2 sentences: what was the role about
+
+    # Impact: the core of ORS. Structured, quantified achievements.
+    impact:
+      - metric: string            # Required. The number. "10M events/day", "95% cost reduction", "Led team of 6"
+        context: string           # Required. What was the situation/project
+        services: [string]        # Optional. Technologies used for this specific impact
+        before: string            # Optional. State before your work
+        after: string             # Optional. State after your work
+        team_size: integer        # Optional. How many people were involved
+
+    technologies: [string]        # Optional. All technologies used in this role
+
+# ─── PROJECTS ─────────────────────────────────────────────
+# Optional. Side projects, open source, portfolio work (no company attached).
+projects:
+  - name: string                  # Required. Project name
+    url: string                   # Optional — repo or live URL
+    role: enum                    # Required. creator | maintainer | contributor
+    summary: string               # Required. 1-2 sentences: what is it
+    impact:                       # Required. Same structure as experience impact
+      - metric: string            # Required
+        context: string           # Required
+    technologies: [string]        # Optional
+
+# ─── LEARNING ─────────────────────────────────────────────
+# Optional. Skills acquired through self-study, courses, or independent projects.
+# Use this for skills that don't appear under any experience entry.
+learning:
+  - name: string                  # Required. What you learned (e.g., "Multi-Agent Systems with LangGraph")
+    period: date                  # Required. YYYY-MM — when you learned it
+    depth: enum                   # Required. beginner | intermediate | advanced | expert
+    evidence: string              # Optional — link to repo, blog post, or certificate that proves it
+    topics: [string]              # Required. At least 1. Searchable keywords (e.g., [ReAct, tool use, guardrails])
+
+# ─── FIELD DEFINITIONS ────────────────────────────────────
+#
+# depth enum:
+#   beginner     — tutorials, side projects, no production use
+#   intermediate — production use, can work independently
+#   advanced     — deep knowledge, can design systems, can mentor
+#   expert       — architectural decisions, knows internals, war stories
+#
+# type enum:
+#   full-time    — standard employment
+#   contract     — fixed-term contract or consulting
+#   freelance    — independent freelance work
+#   founding     — founding team member / first engineer
+#   internship   — internship or co-op
+#
+# role enum (projects):
+#   creator      — you built it from scratch
+#   maintainer   — you actively maintain it
+#   contributor  — you contributed meaningfully
+#
+# date format: YYYY-MM (e.g., 2017-01)
+#
+# ─── VALIDATION RULES ─────────────────────────────────────
+#
+# 1. schema field is required and must be "ors/v0.1"
+# 2. basics.name, basics.title, basics.contact.email are required
+# 3. At least 1 primary skill is required
+# 4. At least 1 experience entry is required
+# 5. Each experience entry must have at least 1 impact item
+# 6. impact.metric and impact.context are required
+# 7. skills.primary should have 3-5 entries (warning if >5)
+# 8. depth must be one of: beginner, intermediate, advanced, expert (applies to skills, projects, and learning)
+# 9. type must be one of: full-time, contract, freelance, founding, internship
+# 10. start date must be before end date (or end = "present")
+# 11. projects.role must be one of: creator, maintainer, contributor
+# 12. learning.topics must have at least 1 entry
+# 13. learning.name and learning.period are required per entry
+# 14. available_from must be a non-negative integer (days until available, 0 = immediate)

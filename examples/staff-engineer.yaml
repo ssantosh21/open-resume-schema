@@ -1,0 +1,175 @@
+# Open Resume Schema — Staff Engineer Example
+# This is a complete example showing all fields in action.
+
+schema: ors/v0.1
+
+basics:
+  name: Priya Sharma
+  title: Staff Engineer
+  location: Bangalore, India
+  years_of_experience: 11
+  available_from: 30
+  summary: >
+    Staff engineer with 11 years building distributed systems and data platforms.
+    Led migration of monolith to event-driven microservices serving 5M+ users.
+    Deep expertise in stream processing, search infrastructure, and ML pipelines.
+  contact:
+    email: priya.sharma@example.com
+    linkedin: linkedin.com/in/priya-sharma-example
+    github: github.com/priya-sharma-example
+
+skills:
+  primary:
+    - name: Distributed Systems
+      depth: expert
+      years: 9
+      tools: [Kafka, Redis, gRPC, Consul, Envoy]
+
+    - name: Search & Retrieval
+      depth: expert
+      years: 6
+      tools: [Elasticsearch, OpenSearch, Lucene, Vector Search]
+
+    - name: Data Pipelines
+      depth: advanced
+      years: 7
+      tools: [Spark, Flink, Airflow, Kafka Streams, Delta Lake]
+
+    - name: ML Infrastructure
+      depth: advanced
+      years: 3
+      tools: [Feature Stores, Model Serving, A/B Testing, MLflow]
+
+  secondary:
+    - name: Java / Kotlin
+      depth: expert
+      years: 11
+
+    - name: Python
+      depth: advanced
+      years: 6
+
+    - name: Kubernetes
+      depth: advanced
+      years: 5
+      tools: [Helm, ArgoCD, Istio]
+
+    - name: Observability
+      depth: advanced
+      years: 5
+      tools: [Prometheus, Grafana, Jaeger, OpenTelemetry]
+
+experience:
+  - company: DataForge Inc.
+    title: Staff Engineer
+    start: 2021-03
+    end: present
+    location: Bangalore, India
+    type: full-time
+    summary: >
+      Technical lead for the real-time data platform team. Owns search
+      infrastructure and ML feature pipeline serving 5M+ daily active users.
+
+    impact:
+      - metric: "5M+ DAU served with p99 latency < 50ms"
+        context: "Redesigned search infrastructure from single Elasticsearch cluster to sharded multi-tenant architecture"
+        services: [Elasticsearch, Kafka, Redis]
+        team_size: 4
+
+      - metric: "70% reduction in feature pipeline latency"
+        context: "Migrated batch feature computation to streaming with Flink"
+        before: "6 hour batch refresh"
+        after: "< 2 minute streaming updates"
+        services: [Flink, Kafka, Delta Lake]
+
+      - metric: "Led migration from monolith to event-driven microservices"
+        context: "Decomposed order processing monolith into 12 services over 18 months"
+        services: [Kafka, gRPC, Kubernetes, Consul]
+        team_size: 8
+
+      - metric: "40% infrastructure cost reduction ($120K/year saved)"
+        context: "Right-sized Kubernetes clusters, implemented spot instances, optimized Kafka retention"
+        services: [Kubernetes, Kafka, Prometheus]
+
+      - metric: "Mentored 4 engineers, 1 promoted to senior"
+        context: "Established architecture review process and internal tech talks program"
+        team_size: 4
+
+    technologies: [Java, Kotlin, Kafka, Elasticsearch, Redis, Flink, Kubernetes, gRPC, Prometheus, Grafana, PostgreSQL, Delta Lake]
+
+  - company: CloudBridge Solutions
+    title: Senior Engineer
+    start: 2018-06
+    end: 2021-02
+    location: Pune, India
+    type: full-time
+    summary: >
+      Backend engineer on the payments platform team handling 2M+ transactions/day.
+
+    impact:
+      - metric: "99.99% uptime for payment processing pipeline"
+        context: "Designed idempotent retry mechanism with exactly-once semantics"
+        services: [Kafka, PostgreSQL, Redis]
+
+      - metric: "Built real-time fraud detection scoring service"
+        context: "ML model serving with < 100ms latency at 500 RPS"
+        services: [Java, Redis, gRPC]
+
+    technologies: [Java, Spring Boot, Kafka, PostgreSQL, Redis, Docker, Jenkins]
+
+  - company: TechStart Labs
+    title: Software Engineer
+    start: 2015-07
+    end: 2018-05
+    location: Hyderabad, India
+    type: full-time
+    summary: >
+      Full-stack engineer building internal tools and customer-facing APIs.
+
+    impact:
+      - metric: "Reduced API response time by 60%"
+        context: "Introduced caching layer and query optimization for product catalog service"
+        services: [Redis, PostgreSQL, Node.js]
+
+    technologies: [Node.js, Python, PostgreSQL, Redis, React, Docker]
+
+projects:
+  - name: StreamBench
+    url: github.com/priya-sharma-example/streambench
+    role: creator
+    summary: >
+      Open-source benchmarking toolkit for comparing stream processing
+      frameworks (Flink vs Kafka Streams vs Spark Streaming) on identical workloads.
+    impact:
+      - metric: "200+ GitHub stars, used by 3 companies for vendor evaluation"
+        context: "Standardized benchmark suite with reproducible Docker-based test harness"
+    technologies: [Java, Flink, Kafka Streams, Docker, Grafana]
+
+  - name: SearchLens
+    url: github.com/priya-sharma-example/searchlens
+    role: creator
+    summary: >
+      Elasticsearch query analyzer that visualizes query execution plans
+      and suggests index optimizations.
+    impact:
+      - metric: "Reduced query debugging time from hours to minutes"
+        context: "Built for internal use, open-sourced after positive team feedback"
+    technologies: [Python, Elasticsearch, React]
+
+learning:
+  - name: "ML Systems Design & Feature Stores"
+    period: 2025-10
+    depth: advanced
+    evidence: github.com/priya-sharma-example/feature-store-demo
+    topics: [feature stores, online/offline serving, model monitoring, A/B testing, MLflow]
+
+  - name: "Vector Search & RAG Pipelines"
+    period: 2026-01
+    depth: intermediate
+    evidence: github.com/priya-sharma-example/vector-search-experiments
+    topics: [vector embeddings, approximate nearest neighbor, HNSW, hybrid search, RAG]
+
+  - name: "Rust for Systems Programming"
+    period: 2025-08
+    depth: beginner
+    topics: [ownership model, async runtime, tokio, systems programming]
